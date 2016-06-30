@@ -1,5 +1,5 @@
 #include<iostream>
-#include<string>
+#include<string.h>
 #include <stdlib.h>
 using namespace std;
 string a[20];
@@ -13,16 +13,17 @@ int main(){
 	}
 	cin.ignore();
 	string sop;
+	string sb;
 	while(true){
 		getline(cin,sop);
 		if(sop == "over") break;
-		s_operator(sop);
+		sb = s_operator(sop);
 	}
 	return 0;
 }
 string find_string(string &s){
 	string str;
-	int i;
+	unsigned int i;
 	for(i = 0; i<s.length(); i++){
 		if(s.at(i) != ' '){
 			str.push_back(s.at(i));
@@ -32,34 +33,39 @@ string find_string(string &s){
 	return str;
 }
 string findop(string sf, int n){
-	int pos = a[n-1].find(sf);
+	//sf = "b";//debug
+	unsigned int pos = a[n-1].find(sf);
+	//cout<<"pos="<<pos<<" sf="<<sf<<" a[n-1]="<<a[n-1]<<" string::npos="<<string::npos<<endl;//debug
 	char array[100];
-	if(pos != string::npos){
-		sprintf(array,"%d",pos);
+	if(pos < 100000000){
+		sprintf(array,"%u",pos);
 	}
 	else{
-		sprintf(array,"%d",sf.length());
+		unsigned int j = sf.length();
+		sprintf(array,"%u",j);
+		//cout<<"j="<<j<<" array="<<array<<endl;//debug
 	} 
 	return array;
 }
 string rfindop(string sf, int n){
-	int pos = a[n-1].rfind(sf);
+	unsigned int pos = a[n-1].rfind(sf);
 	char array[100];
-	if(pos != string::npos){
-		sprintf(array,"%d",pos);
+	if(pos != 100000000){
+		sprintf(array,"%u",pos);
 	}
 	else{
-		sprintf(array,"%d",sf.length());
+		unsigned int j = sf.length();
+		sprintf(array,"%u",j);
 	} 
 	return array;
 }
 string addop(string s1, string s2){
-	for(int i = 0; i<s1.length(); i++){
+	for(unsigned int i = 0; i<s1.length(); i++){
 		if(s1.at(i)<'0' || s1.at(i)>'9'){
 			return s1+s2;
 		}
 	}
-	for(int i = 0; i<s2.length(); i++){
+	for(unsigned int i = 0; i<s2.length(); i++){
 		if(s2.at(i)<'0' || s2.at(i)>'9'){
 			return s1+s2;
 		}
@@ -69,7 +75,7 @@ string addop(string s1, string s2){
 	if(a>=0 && a<=99999 && b>=0 && b<=99999){
 		long c = a+b;
 		char array[100];
-		sprintf(array,"%d",c);
+		sprintf(array,"%ld",c);
 		return array;
 	}else return s1+s2;
 }
