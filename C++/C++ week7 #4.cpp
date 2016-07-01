@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string.h>
 #include <stdlib.h>
+#include<string>
 using namespace std;
 string a[20];
 int sn;
@@ -12,12 +13,13 @@ int main(){
 		cin>>a[i];
 	}
 	cin.ignore();
-	string sop;
-	string sb;//仅用来接收返回值 
+	string sop;//存储待操作字符串 
+	string sb;//仅用来接收返回值,无实际意义 
 	while(true){
 		getline(cin,sop);
 		if(sop == "over") break;
 		sb = s_operator(sop);
+		sop.clear(); //清空里面的内容 
 	}
 	return 0;
 }
@@ -36,7 +38,7 @@ string findop(string sf, int n){
 	//sf = "b";//debug
 	unsigned int pos = a[n-1].find(sf);
 	//cout<<"pos="<<pos<<" sf="<<sf<<" a[n-1]="<<a[n-1]<<" string::npos="<<string::npos<<endl;//debug
-	char array[100];
+	char* array = new char[101];
 	if(pos < 100000000){
 		sprintf(array,"%u",pos);
 	}
@@ -49,8 +51,8 @@ string findop(string sf, int n){
 }
 string rfindop(string sf, int n){
 	unsigned int pos = a[n-1].rfind(sf);
-	char array[100];
-	if(pos != 100000000){
+	char* array = new char[101];
+	if(pos < 100000000){
 		sprintf(array,"%u",pos);
 	}
 	else{
@@ -74,7 +76,7 @@ string addop(string s1, string s2){
 	long b = atoi(s2.c_str());
 	if(a>=0 && a<=99999 && b>=0 && b<=99999){
 		long c = a+b;
-		char array[100];
+		char* array = new char[101];
 		sprintf(array,"%ld",c);
 		return array;
 	}else return s1+s2;
@@ -97,7 +99,7 @@ string s_operator(string& s){
 		//cout<<"reset s ="<<s1<<endl;//debug
 		int n = atoi(s_operator(s).c_str());
 		//cout<<"reset n="<<n<<endl;//debug
-		a[n-1] = s1;
+		a[n-1].swap(s1);
 	}else if(str == "insert"){
 		string s1 = s_operator(s);
 		int n = atoi(s_operator(s).c_str());
