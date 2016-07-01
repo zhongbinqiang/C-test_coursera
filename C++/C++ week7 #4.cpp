@@ -2,6 +2,7 @@
 #include<string.h>
 #include <stdlib.h>
 #include<string>
+#include <stdio.h>
 using namespace std;
 string a[20];
 int sn;
