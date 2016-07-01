@@ -34,6 +34,7 @@ int main() {
 			}
 			case 'u':{
 				cin>>id1;
+				m[id1].sort();
 				m[id1].unique();
 				break;
 			}
