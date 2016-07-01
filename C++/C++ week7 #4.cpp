@@ -13,7 +13,7 @@ int main(){
 	}
 	cin.ignore();
 	string sop;
-	string sb;
+	string sb;//仅用来接收返回值 
 	while(true){
 		getline(cin,sop);
 		if(sop == "over") break;
@@ -27,7 +27,7 @@ string find_string(string &s){
 	for(i = 0; i<s.length(); i++){
 		if(s.at(i) != ' '){
 			str.push_back(s.at(i));
-		} else break;
+		} else if(s.at(i+1) != ' ') break;//也许空格不止一个 
 	}
 	if(i != s.length()) s = s.substr(i+1,s.length()-i-1);
 	return str;
