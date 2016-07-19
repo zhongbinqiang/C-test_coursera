@@ -13,9 +13,10 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-
-
-
+h = X * theta; % h is the vetor that store the estimated value of each learning sample
+for i = 1:m,
+    J = J + 1/(2*m)*(h(i) - y(i))^2; % get the cost value, and sum up
+end
 
 % =========================================================================
 

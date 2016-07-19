@@ -17,15 +17,17 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-
-
-
-
-
-
-
-
-
+n = size(X,2);
+h = X * theta;% h is the vetor that store the estimated value of each learning sample, not in the circle
+v = zeros(n,1);
+for i = 1:n,
+    v(i) = (alpha/m)*(X(:,i)'*(h-y)); % score the partial derivative value
+end
+for i = 1:n,
+    theta(i) = theta(i) - v(i); %simutaniously update the theta value
+end
+%wow the vetor is very powerful tool, thanks the teacher who ever teach me
+%this.
 
     % ============================================================
 
