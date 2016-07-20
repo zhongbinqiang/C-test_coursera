@@ -19,9 +19,13 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
+n = size(X,2);% number of feature + 1
+h = sigmoid(X*theta);%hypothesis function, m*1
+J = (1/m) *(-1* (y'* log(h)) - (1 - y)'* log(1 - h));%cost function
 
-
-
+for j = 1:n,
+    grad(j) = (1/m) * X(:,j)'*(h - y);%gradient function of each feature
+end
 
 
 
