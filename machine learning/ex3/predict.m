@@ -21,14 +21,18 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% Add 1 to the X
+X = [ones(m,1) X];
+%compute a(2) for every training sample
+A2 = sigmoid(X*Theta1');
+% Add 1 to the a(2)
+A2 = [ones(m,1) A2];
+%compute a(3) for every training sample
+A3 = sigmoid(A2*Theta2');
+%get the index of the maximum value of every training sample
+[M,I] = max(transpose(A3));
 
-
-
-
-
-
-
-
+p = I';
 % =========================================================================
 
 
