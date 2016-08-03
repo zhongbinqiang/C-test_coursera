@@ -62,18 +62,57 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%add 1 to X
+X = [ones(m,1) X];
+%compute the activation value of layer 2
+A2 = sigmoid(X*Theta1');
+%add 1 to A2
+A2 = [ones(size(A2,1),1) A2];
+%compute the hypothesis function of each num_labels
+H = sigmoid(A2*Theta2');
+%modify vetors y into Y that containing only 1 or 1
+Y = zeros(m,num_labels);
+for i = 1:m,
+    Y(i,y(i)) = 1;
+end
+% use to compute the sum value
+sum1 = ones(num_labels,1);
+sum2 = ones(1,m);
+%use vectorization to compute the cost function without regularization term
+J = (1/m)*sum2*(-1*Y.*log(H)*sum1 - (1 - Y).*log(1-H)*sum1);
 
 
+%compute the regularization R, not containing the bias
+R = 0;
+for i = 1:size(Theta1,1),
+    for j = 2:size(Theta1,2),
+        R = R + Theta1(i,j)^2;
+    end
+end
+for i = 1:size(Theta2,1),
+    for j = 2:size(Theta2,2),
+        R = R + Theta2(i,j)^2;
+    end
+end
+%cost function with the regularization term
+J = J + lambda/(2*m)*R;
 
 
-
-
-
-
-
-
-
-
+for i = 1:m,
+    %ectract example i to a1;
+    a1 = X(i,:)';
+    %add bias unit
+    a1 = [1;a1];
+    %use the hypothesis value to compute the error term of layer 3
+    Q3 = (H(i,:)' - Y);
+    %compute the z value of layer 2
+    z2 = Theta1*a1;
+    %add bias unit
+    z2 = [1;z2];
+    %compute upper layer error term
+    Q2 = Theta2'*Q3.*sigmoidGradient(z2);
+    
+end
 
 
 
