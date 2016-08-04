@@ -97,23 +97,32 @@ end
 %cost function with the regularization term
 J = J + lambda/(2*m)*R;
 
+%init the Triangle value to zero.
+Triangle1 = zeros(size(Theta1));
+Triangle2 = zeros(size(Theta2));
 
 for i = 1:m,
     %ectract example i to a1;
     a1 = X(i,:)';
-    %add bias unit
-    a1 = [1;a1];
     %use the hypothesis value to compute the error term of layer 3
-    Q3 = (H(i,:)' - Y);
+    delta3 = H(i,:)' - Y(i,:)';
     %compute the z value of layer 2
     z2 = Theta1*a1;
+    %compute activation in layer2
+    a2 = sigmoid(z2);
     %add bias unit
+    a2 = [1;a2];
     z2 = [1;z2];
     %compute upper layer error term
-    Q2 = Theta2'*Q3.*sigmoidGradient(z2);
-    
+    delta2 = Theta2'*delta3.*sigmoidGradient(z2);
+    %the first term have to delete
+    delta2 = delta2(2:end);
+    %Accumulate the gradient
+    Triangle1 = Triangle1 + delta2*a1';
+    Triangle2 = Triangle2 + delta3*a2';
 end
-
+Theta1_grad = (1/m)*Triangle1;
+Theta2_grad = (1/m)*Triangle2;
 
 
 
