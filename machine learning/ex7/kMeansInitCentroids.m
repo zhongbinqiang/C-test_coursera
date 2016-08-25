@@ -13,8 +13,9 @@ centroids = zeros(K, size(X, 2));
 %               the dataset X
 %
 
-
-
+%在训练集中随机的选择K个点作为初始的中心点，首先打散顺序
+randidx = randperm(size(X,1));
+centroids = X(randidx(1:K),:);
 
 
 
